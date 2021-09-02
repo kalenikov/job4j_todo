@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
     private String description;
     private Timestamp created = Timestamp.valueOf(LocalDateTime.now());
     private boolean done = false;
