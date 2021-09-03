@@ -3,6 +3,8 @@ package ru.job4j.todo.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "items")
@@ -13,8 +15,11 @@ public class Item {
     private String description;
     private Timestamp created = Timestamp.valueOf(LocalDateTime.now());
     private boolean done = false;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Integer getId() {
+   public Integer getId() {
         return id;
     }
 
@@ -55,6 +60,14 @@ public class Item {
         this.done = done;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -62,6 +75,7 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", created=" + created +
                 ", done=" + done +
+                ", user=" + user +
                 '}';
     }
 }

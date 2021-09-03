@@ -2,7 +2,10 @@ let items = [
     {
         "id": 1,
         "description": "Add new task",
-        "done": false
+        "done": false,
+        "user": {
+            "name": "your"
+        }
     }
 ];
 
@@ -54,7 +57,7 @@ function printItemRow(item) {
     return '<li class="list-group-item">' +
         `<input id=${item.id} class="form-check-input me-1" type="checkbox" aria-label="..."` +
         (item.done ? ' checked' : '') +
-        `>${item.description}` +
+        `>${item.description} [by ${item.user.name}]` +
         '</li>';
 }
 

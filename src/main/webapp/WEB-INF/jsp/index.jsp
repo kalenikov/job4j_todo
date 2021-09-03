@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,9 +15,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
-<script src="items.js"></script>
+
+<script>
+   <jsp:include page='items.js'/>
+</script>
 
 <div class="container mt-3 mr-3">
+    <div class='d-flex justify-content-end'>
+        <ul class="nav">
+            <a class="nav-link" href="${pageContext.request.contextPath}/login.do">
+                <c:choose>
+                    <c:when test="${user == null}">
+                        Login
+                    </c:when>
+                    <c:otherwise>
+                        Logout &nbsp;
+                        <c:out value="${user.name}"/>
+                    </c:otherwise>
+                </c:choose>
+            </a>
+            <li class="nav-item">
+                <a class="nav-link active" href="reg.do">Signup</a>
+            </li>
+        </ul>
+    </div>
     <p class="h3">Todo App</p>
     <div class="spinner-border" role="status" id="list-spinner">
     </div>
