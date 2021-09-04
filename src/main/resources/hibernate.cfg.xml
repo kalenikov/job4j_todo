@@ -26,5 +26,9 @@
         <mapping class="ru.job4j.todo.lessons.many.Role"/>
         <mapping class="ru.job4j.todo.lessons.many.cars.CarBrand"/>
         <mapping class="ru.job4j.todo.lessons.many.cars.CarModel"/>
+        <mapping class="ru.job4j.todo.lessons.manytomany.Person"/>
+        <mapping class="ru.job4j.todo.lessons.manytomany.Address"/>
+        <mapping class="ru.job4j.todo.lessons.manytomany.books.Book"/>
+        <mapping class="ru.job4j.todo.lessons.manytomany.books.Author"/>
     </session-factory>
 </hibernate-configuration>
