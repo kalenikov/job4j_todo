@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 
 <script>
-   <jsp:include page='items.js'/>
+    <jsp:include page='items.js'/>
 </script>
 
 <div class="container mt-3 mr-3">
@@ -42,20 +42,27 @@
     <p class="h3">Todo App</p>
     <div class="spinner-border" role="status" id="list-spinner">
     </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-6">
+            <label for="categories">Select category for new task</label>
+            <select class="form-control" id="categories" multiple>
+            </select>
+        </div>
+    </div>
+
     <div class="row mb-3">
         <div class="col">
             <div class="input-group">
-                <label>
-                    <input name="description" id="item-form" type="text" class="form-control"
-                           placeholder="Input new task">
-                </label>
+                <input name="description" id="item-form" type="text" style="width: 100%" class="form-control"
+                       placeholder="Input new task" aria-label="">
             </div>
         </div>
         <div class="col" id="input-spinner-div">
             <div class="spinner-border" role="status">
             </div>
         </div>
-        <div class="col">
+        <div class="col d-flex justify-content-end">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="toggleShowDone" value="true" checked>
                 <label class="form-check-label" for="toggleShowDone">show done</label>

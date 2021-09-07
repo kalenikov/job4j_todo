@@ -1,13 +1,26 @@
-let items = [
-    {
-        "id": 1,
-        "description": "Add new task",
-        "done": false,
-        "user": {
-            "name": "your"
+let state = {
+    items: [
+        {
+            "id": 1,
+            "description": "Add new task",
+            "done": false,
+            "user": {
+                "name": "your"
+            },
+            "categories": [1, 2]
         }
-    }
-];
+    ],
+    categories: [
+        {
+            "id": 1,
+            "name": "cat1"
+        },
+        {
+            "id": 2,
+            "name": "cat2"
+        }
+    ]
+}
 
 $(function () {
     $('#input-spinner-div').hide();
@@ -19,15 +32,23 @@ $(function () {
             return
         }
         postItem({
-            description: e.currentTarget.value
+            categories: getSelectedCategories(),
+            description: e.currentTarget.value,
+            user: {
+                id: 1
+            }
         })
         e.currentTarget.value = ''
     });
 
     // toggle 'show done' click handler
     $('#toggleShowDone').click(e => {
-        redraw(filter(items))
+        redraw(filter(state))
     })
+
+    function getSelectedCategories() {
+        return $('#categories option:selected').toArray().map(el => ({"id": el.value}));
+    }
 
     // item click handler
     $(document).on('click', '#items ul li input', e => {
@@ -36,21 +57,30 @@ $(function () {
 })
 
 function toggleItem(id) {
-    let item = items.find(item => item.id === Number.parseInt(id));
+    let item = state.items.find(item => item.id === Number.parseInt(id));
     item.done = !item.done;
     postItem(item)
 }
 
-function redraw(items) {
+function redraw(state) {
     $('#items ul li').remove();
-    $.each(items, (_, item) => {
+    $.each(state.items, (_, item) => {
         $('#items ul').append(printItemRow(item))
+    });
+
+    $('#categories option').remove();
+    $.each(state.categories, (_, category) => {
+        $('#categories').append(printCategoryRow(category))
     });
 }
 
-function filter(items) {
+function filter(state) {
     let showDone = $('#toggleShowDone:checked').val() === 'true';
-    return showDone ? items : items.filter(item => !item.done)
+    state.items.sort((a, b) => (a.done === b.done) ? 0 : a.done ? 1 : -1);
+    return showDone ? state : {
+        categories: state.categories,
+        items: state.items.filter(item => !item.done)
+    }
 }
 
 function printItemRow(item) {
@@ -61,18 +91,27 @@ function printItemRow(item) {
         '</li>';
 }
 
+function printCategoryRow(category) {
+    return `<option value=${category.id}>${category.name}</option>`;
+}
+
 function getItems() {
     $.ajax({
             type: 'GET',
             crossdomain: true,
             url: 'http://localhost:8080/todo/items',
             dataType: 'json',
+            beforeSend: () => {
+                $('#list-spinner').show();
+            },
             complete: () => {
                 $('#list-spinner').hide();
             },
             success: data => {
-                items = data.slice();
-                redraw(filter(items))
+                //copy arrays to state
+                state.items = data.items.slice();
+                state.categories = data.categories.slice();
+                redraw(filter(state))
             },
             error: jqXHR => console.log(jqXHR.responseText)
         }
@@ -93,13 +132,13 @@ function postItem(item) {
             $('#input-spinner-div').hide();
         },
         success: item => {
-            let idx = items.findIndex(el => el.id === item.id)
+            let idx = state.items.findIndex(el => el.id === item.id)
             if (idx === -1) {
-                items.push(item)
+                state.items.push(item)
             } else {
-                items[idx] = item
+                state.items[idx] = item
             }
-            redraw(filter(items))
+            redraw(filter(state))
         },
         error: jqXHR => console.log(jqXHR.responseText)
     });

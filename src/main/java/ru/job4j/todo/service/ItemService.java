@@ -1,6 +1,7 @@
 package ru.job4j.todo.service;
 
 import ru.job4j.todo.model.Item;
+import ru.job4j.todo.repository.HibernateCategoryRepository;
 import ru.job4j.todo.repository.HibernateItemRepository;
 import ru.job4j.todo.repository.ItemRepository;
 
@@ -21,6 +22,8 @@ public class ItemService {
     }
 
     public Item save(Item dto) {
+        //attach all categories to current session
+        dto.getCategories().forEach(category -> HibernateCategoryRepository.getInstance().get(category.getId()));
         ItemRepository repo = HibernateItemRepository.getInstance();
         if (dto.getId() != null) {
             Optional<Item> stored = Optional.ofNullable(repo.get(dto.getId()));
