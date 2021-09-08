@@ -13,13 +13,14 @@ create table engine
 create table car
 (
     id        serial primary key,
-    engine_id int not null unique references engine (id),
-    owner_id  int not null unique references persons (id)
+    engine_id int not null references engine (id),
+    owner_id  int not null references persons (id)
 );
 
 create table car_drivers
 (
-    id        serial primary key,
-    car_id    int not null unique references car (id),
-    driver_id int not null unique references persons (id)
+    car_id    int not null references car (id),
+    driver_id int not null references persons (id),
+    constraint car_drivers_pkey
+        primary key (car_id, driver_id)
 );
