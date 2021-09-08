@@ -25,7 +25,7 @@ public class ItemService {
         //attach all categories to current session
         dto.getCategories().forEach(category -> HibernateCategoryRepository.getInstance().get(category.getId()));
         ItemRepository repo = HibernateItemRepository.getInstance();
-        if (dto.getId() != null) {
+        if (dto.getId() != 0) {
             Optional<Item> stored = Optional.ofNullable(repo.get(dto.getId()));
             if (stored.isPresent()) {
                 dto.setCreated(stored.get().getCreated());
