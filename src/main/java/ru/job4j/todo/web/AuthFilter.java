@@ -17,6 +17,8 @@ public class AuthFilter implements Filter {
         }
         if (req.getSession().getAttribute("user") == null) {
             req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
+            return;
         }
+        chain.doFilter(request, response);
     }
 }
