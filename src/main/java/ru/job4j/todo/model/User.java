@@ -1,9 +1,6 @@
 package ru.job4j.todo.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +13,7 @@ import javax.persistence.Table;
 @ToString
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(of = {"id"})
 public class User {
     @Id
     @GeneratedValue

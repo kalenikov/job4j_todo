@@ -1,5 +1,6 @@
 package ru.job4j.todo.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "categories")
+@EqualsAndHashCode(of = {"id"})
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
