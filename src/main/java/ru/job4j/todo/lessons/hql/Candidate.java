@@ -20,4 +20,10 @@ public class Candidate {
     private String name;
     private int experience;
     private int salary;
+
+    public Candidate(String name, int experience, int salary) {
+        this.name = name;
+        this.experience = experience;
+        this.salary = salary;
+    }
 }

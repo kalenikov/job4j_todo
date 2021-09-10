@@ -18,9 +18,9 @@ public class HbmRun {
             Session session = sf.openSession();
             session.beginTransaction();
 
-            session.save(new Candidate(0, "cand1", 10, 10));
-            session.save(new Candidate(0, "cand2", 20, 20));
-            session.save(new Candidate(0, "cand3", 30, 30));
+            session.save(new Candidate("cand1", 10, 10));
+            session.save(new Candidate("cand2", 20, 20));
+            session.save(new Candidate("cand3", 30, 30));
 
 
             List<Candidate> list = session.createQuery("from Candidate", Candidate.class)
