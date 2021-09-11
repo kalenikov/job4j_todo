@@ -46,6 +46,11 @@
         <!--        <mapping class="ru.job4j.todo.lessons.manytomany.humans.City"/>-->
         <!--        <mapping class="ru.job4j.todo.lessons.manytomany.humans.Human"/>-->
         <mapping class="ru.job4j.todo.lessons.hql.Candidate"/>
+        <mapping class="ru.job4j.todo.lessons.hql.VacancyDB"/>
+        <mapping class="ru.job4j.todo.lessons.hql.Vacancy"/>
+        <!--        <mapping class="ru.job4j.todo.lessons.hql.ex.Account"/>-->
+        <!--        <mapping class="ru.job4j.todo.lessons.hql.ex.Student"/>-->
+        <!--        <mapping class="ru.job4j.todo.lessons.hql.ex.Book"/>-->
 
     </session-factory>
 </hibernate-configuration>

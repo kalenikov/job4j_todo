@@ -18,15 +18,27 @@ public class HbmRun {
             Session session = sf.openSession();
             session.beginTransaction();
 
-            session.save(new Candidate("cand1", 10, 10));
-            session.save(new Candidate("cand2", 20, 20));
-            session.save(new Candidate("cand3", 30, 30));
+            VacancyDB db = new VacancyDB("db1", List.of(
+                    new Vacancy("vacancy1"),
+                    new Vacancy("vacancy2"),
+                    new Vacancy("vacancy3")
+            ));
 
+            session.persist(new Candidate("cand1", 10, 10, db));
+            session.persist(new Candidate("cand2", 20, 20, db));
+            session.persist(new Candidate("cand3", 30, 30, db));
 
-            List<Candidate> list = session.createQuery("from Candidate", Candidate.class)
+            List<Candidate> candidates = session.createQuery(
+                            "select distinct c from Candidate c " +
+                                    "join fetch c.vacancyDB db " +
+                                    "join fetch db.vacancies",
+                            Candidate.class)
                     .getResultList();
+            for (Candidate candidate : candidates) {
+                System.out.println(candidate);
+            }
 
-            list = session.createQuery("from Candidate s where s.id = 1", Candidate.class)
+            candidates = session.createQuery("from Candidate s where s.id = 1", Candidate.class)
                     .getResultList();
 
             Candidate candidate = session.createQuery("from Candidate s where s.name = :name", Candidate.class)

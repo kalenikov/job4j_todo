@@ -21,9 +21,14 @@ public class Candidate {
     private int experience;
     private int salary;
 
-    public Candidate(String name, int experience, int salary) {
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "db_id")
+    private VacancyDB vacancyDB;
+
+    public Candidate(String name, int experience, int salary, VacancyDB vacancyDB) {
         this.name = name;
         this.experience = experience;
         this.salary = salary;
+        this.vacancyDB = vacancyDB;
     }
 }
